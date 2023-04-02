@@ -19,7 +19,6 @@
 		"noUnusedParameters": true,
 		"checkJs": true,
 		"noErrorTruncation": true,
-		"removeComments": true,
 		//
 		"types": ["vitest/globals"],
 		"noEmit": true,

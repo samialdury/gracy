@@ -1,6 +1,6 @@
 {
 	"name": "gracy",
-	"description": "Template repository for setting up new NPM library",
+	"description": "Execute custom cleanup functions before Node.js exits",
 	"version": "0.0.1",
 	"author": "Sami Al-Dury",
 	"license": "MIT",

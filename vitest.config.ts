@@ -10,6 +10,7 @@ export default defineConfig({
 		coverage: {
 			provider: 'c8',
 			include: ['src/**/*.ts'],
+			exclude: ['src/index.ts', 'src/**/types.ts', 'src/**/*.test.ts'],
 			all: true,
 			lines: 50,
 			functions: 50,
