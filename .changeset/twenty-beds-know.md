@@ -1,5 +1,0 @@
----
-'gracy': major
----
-
-Initial release
