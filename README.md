@@ -2,6 +2,7 @@
 
 [![Latest release](https://badgen.net/github/release/samialdury/gracy)](https://github.com/samialdury/gracy/releases/latest)
 [![Latest tag](https://badgen.net/github/tag/samialdury/gracy)](https://github.com/samialdury/gracy/tags)
+[![npm](https://badgen.net/npm/v/gracy)](https://www.npmjs.com/package/gracy)
 [![License](https://badgen.net/github/license/samialdury/gracy)](LICENSE)
 [![CI status](https://github.com/samialdury/gracy/actions/workflows/ci.yaml/badge.svg)](https://github.com/samialdury/gracy/actions/workflows/ci.yaml)
 

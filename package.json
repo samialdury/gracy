@@ -49,5 +49,17 @@
 		"tsup": "6.7.0",
 		"typescript": "5.0.2",
 		"vitest": "0.29.7"
-	}
+	},
+	"keywords": [
+		"graceful",
+		"shutdown",
+		"cleanup",
+		"exit",
+		"signal",
+		"process",
+		"node",
+		"nodejs",
+		"close",
+		"terminate"
+	]
 }
