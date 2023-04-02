@@ -1,19 +1,16 @@
 {
-	"name": "@samialdury/create-npm-library",
+	"name": "gracy",
 	"description": "Template repository for setting up new NPM library",
-	"version": "1.0.0",
+	"version": "0.0.1",
 	"author": "Sami Al-Dury",
 	"license": "MIT",
-	"publishConfig": {
-		"access": "public"
-	},
-	"homepage": "https://github.com/samialdury/create-npm-library#readme",
+	"homepage": "https://github.com/samialdury/gracy#readme",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/samialdury/create-npm-library.git"
+		"url": "git+https://github.com/samialdury/gracy.git"
 	},
 	"bugs": {
-		"url": "https://github.com/samialdury/create-npm-library/issues"
+		"url": "https://github.com/samialdury/gracy/issues"
 	},
 	"main": "./dist/index.js",
 	"module": "./dist/index.mjs",
