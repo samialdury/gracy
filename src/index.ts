@@ -1,1 +1,2 @@
-export * from './hello-world.js'
+export * from './on-exit.js'
+export * from './types.js'

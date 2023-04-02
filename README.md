@@ -1,29 +1,41 @@
-# Create NPM Library
+# Gracy
 
-[![Latest release](https://badgen.net/github/release/samialdury/create-npm-library)](https://github.com/samialdury/create-npm-library/releases/latest)
-[![Latest tag](https://badgen.net/github/tag/samialdury/create-npm-library)](https://github.com/samialdury/create-npm-library/tags)
-[![License](https://badgen.net/github/license/samialdury/create-npm-library)](LICENSE)
-[![CI status](https://github.com/samialdury/create-npm-library/actions/workflows/ci.yaml/badge.svg)](https://github.com/samialdury/create-npm-library/actions/workflows/ci.yaml)
+[![Latest release](https://badgen.net/github/release/samialdury/gracy)](https://github.com/samialdury/gracy/releases/latest)
+[![Latest tag](https://badgen.net/github/tag/samialdury/gracy)](https://github.com/samialdury/gracy/tags)
+[![License](https://badgen.net/github/license/samialdury/gracy)](LICENSE)
+[![CI status](https://github.com/samialdury/gracy/actions/workflows/ci.yaml/badge.svg)](https://github.com/samialdury/gracy/actions/workflows/ci.yaml)
 
-This is a template repository for setting up new NPM library based on my personal preference.
+Execute custom cleanup functions before Node.js exits. Zero dependencies.
 
-Ships with typings and supports CJS & ESM.
-
-## Quick start
-
-The easiest way to get started is either by [creating a new Github repository from this template](https://github.com/samialdury/create-npm-library/generate) or cloning it with [tiged](https://github.com/tiged/tiged):
+## Usage
 
 ```sh
-pnpm dlx tiged github:samialdury/create-npm-library my-library
-
-cd my-library
-git init
-make install
-
-make help
+pnpm i gracy
 ```
 
+```ts
+import { onExit } from 'gracy'
+
+onExit(
+  { logger: pinoInstance },
+  closeHttpServer,
+  closeDatabaseConnection
+)
+```
+
+## Configuration
+
+The `onExit` function accepts an configuration object as its first argument. The following options are available:
+
+| Name      | Default value                                 | Description                                                                                                                                                                                           |
+| --------- | --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `logger`  |                                               | Logger to use. You should use libraries for structured logging such as [pino](https://github.com/pinojs/pino), but you can also use the built-in `console` object. Set to `false` to disable logging. |
+| `events`  | `['uncaughtException', 'unhandledRejection']` | Events to listen to. Triggering these events will cause the process to exit with code `1`.                                                                                                            |
+| `signals` | `['SIGTERM', 'SIGINT']`                       | Signals to listen to. Triggering these signals will cause the process to exit with code `0`.                                                                                                          |
+
 ## Stack
+
+This project has been scaffolded with [create-npm-library](https://github.com/samialdury/create-npm-library).
 
 - [Node.js](https://github.com/nodejs/node) & [Typescript](https://github.com/microsoft/TypeScript) (ESM)
 - [tsup](https://github.com/egoist/tsup) for bundling
