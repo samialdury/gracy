@@ -38,15 +38,6 @@ The `onExit` function accepts an configuration object as its first argument. The
 
 This project has been scaffolded with [create-npm-library](https://github.com/samialdury/create-npm-library).
 
-- [Node.js](https://github.com/nodejs/node) & [Typescript](https://github.com/microsoft/TypeScript) (ESM)
-- [tsup](https://github.com/egoist/tsup) for bundling
-- [pnpm](https://github.com/pnpm/pnpm) package manager
-- [Vitest](https://github.com/vitest-dev/vitest) for testing (coverage via [c8](https://github.com/bcoe/c8))
-- [Prettier](https://github.com/prettier/prettier) formatter
-- [ESLint](https://github.com/eslint/eslint) linter
-- [Husky](https://github.com/typicode/husky) Git hooks
-- [Changesets](https://github.com/changesets/changesets) for versioning
-
 ## License
 
 [MIT](LICENSE)
