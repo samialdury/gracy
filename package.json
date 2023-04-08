@@ -12,6 +12,7 @@
 	"bugs": {
 		"url": "https://github.com/samialdury/gracy/issues"
 	},
+	"type": "module",
 	"main": "./dist/index.js",
 	"module": "./dist/index.mjs",
 	"exports": {
