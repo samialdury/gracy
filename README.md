@@ -6,7 +6,7 @@
 [![License](https://badgen.net/github/license/samialdury/gracy)](LICENSE)
 [![CI status](https://github.com/samialdury/gracy/actions/workflows/ci.yaml/badge.svg)](https://github.com/samialdury/gracy/actions/workflows/ci.yaml)
 
-Execute custom cleanup functions before Node.js exits. Zero dependencies.
+Gracy is a zero-dependency library that provides a simple way to execute custom functions before a Node.js process exits. It helps you ensure that your applications perform cleanup tasks, gracefully close resources, and maintain data integrity during (un)expected shutdowns or terminations.
 
 ## Usage
 
@@ -19,6 +19,7 @@ import { onExit } from 'gracy'
 
 onExit(
   { logger: pinoInstance },
+  // Supports sync/async functions
   closeHttpServer,
   closeDatabaseConnection
 )
