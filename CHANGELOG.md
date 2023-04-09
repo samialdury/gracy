@@ -1,5 +1,11 @@
 # gracy
 
+## 1.0.2
+
+### Patch Changes
+
+- 82e5011: Fix exports in `package.json`
+
 ## 1.0.1
 
 ### Patch Changes
