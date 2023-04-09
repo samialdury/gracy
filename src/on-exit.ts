@@ -1,7 +1,7 @@
 import process from 'node:process'
 import { types } from 'node:util'
 
-import { Logger, OnExitFn, OnExitOptions } from './types.js'
+import type { Logger, OnExitFn, OnExitOptions } from './types.js'
 
 const LOG_PREFIX = '[gracy]'
 

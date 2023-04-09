@@ -1,4 +1,4 @@
-import { onExit } from './on-exit'
+import { onExit } from './on-exit.js'
 
 describe('onExit', () => {
 	it('should be a function', () => {
