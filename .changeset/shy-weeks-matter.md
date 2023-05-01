@@ -2,4 +2,4 @@
 "gracy": patch
 ---
 
-chore(deps): update linters
+Update linters
