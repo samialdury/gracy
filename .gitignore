@@ -1,8 +1,11 @@
+# https://gist.github.com/samialdury/a7919486bc62fbc68b4066ebb177c697
+
 .DS_Store
+.cache
 
 node_modules
+build
 dist
 coverage
-.eslintcache
 
 .env

@@ -1,5 +1,14 @@
+# https://gist.github.com/samialdury/b8620ba0928c29028ed65fb4b4b39e53
+
+.git
+.husky
+.DS_Store
+.cache
+
 node_modules
+build
 dist
 coverage
+
 pnpm-lock.yaml
 *.md
