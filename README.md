@@ -1,12 +1,9 @@
 # Gracy
 
-[![Latest release](https://badgen.net/github/release/samialdury/gracy)](https://github.com/samialdury/gracy/releases/latest)
-[![Latest tag](https://badgen.net/github/tag/samialdury/gracy)](https://github.com/samialdury/gracy/tags)
-[![npm](https://badgen.net/npm/v/gracy)](https://www.npmjs.com/package/gracy)
-[![License](https://badgen.net/github/license/samialdury/gracy)](LICENSE)
+[![NPM version](https://img.shields.io/npm/v/gracy)](https://www.npmjs.com/package/gracy)
 [![CI status](https://github.com/samialdury/gracy/actions/workflows/ci.yaml/badge.svg)](https://github.com/samialdury/gracy/actions/workflows/ci.yaml)
 
-Gracy is a zero-dependency library that provides a simple way to execute custom functions before a Node.js process exits. It helps you ensure that your applications perform cleanup tasks, gracefully close resources, and maintain data integrity during (un)expected shutdowns or terminations.
+Gracy is a zero-dependency library that provides a simple way to execute custom function before a Node.js process exits. It helps you ensure that your applications perform cleanup tasks, gracefully close resources, and maintain data integrity during (un)expected shutdowns or terminations.
 
 ## Usage
 
@@ -18,10 +15,12 @@ pnpm i gracy
 import { onExit } from 'gracy'
 
 onExit(
-  { logger: pinoInstance },
-  // Supports sync/async functions
-  closeHttpServer,
-  closeDatabaseConnection
+    { logger: pinoInstance },
+    // Supports sync/async functions
+    async () => {
+        closeHttpServer()
+        await closeDatabaseConnection()
+    }
 )
 ```
 
