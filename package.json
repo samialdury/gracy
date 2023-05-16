@@ -1,6 +1,6 @@
 {
     "name": "gracy",
-    "version": "1.0.2",
+    "version": "2.0.0",
     "description": "Execute custom cleanup function before Node.js exits",
     "author": "Sami Al-Dury",
     "license": "MIT",
