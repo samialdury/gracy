@@ -34,10 +34,6 @@ The `onExit` function accepts an configuration object as its first argument. The
 | `events`  | `['uncaughtException', 'unhandledRejection']` | Events to listen to. Triggering these events will cause the process to exit with code `1`.                                                                                                            |
 | `signals` | `['SIGTERM', 'SIGINT']`                       | Signals to listen to. Triggering these signals will cause the process to exit with code `0`.                                                                                                          |
 
-## Stack
-
-This project has been scaffolded with [create-npm-library](https://github.com/samialdury/create-npm-library).
-
 ## License
 
 [MIT](LICENSE)
