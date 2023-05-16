@@ -1,66 +1,83 @@
 {
-	"name": "gracy",
-	"version": "1.0.2",
-	"description": "Execute custom cleanup functions before Node.js exits",
-	"author": "Sami Al-Dury",
-	"license": "MIT",
-	"homepage": "https://github.com/samialdury/gracy#readme",
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/samialdury/gracy.git"
-	},
-	"bugs": {
-		"url": "https://github.com/samialdury/gracy/issues"
-	},
-	"type": "module",
-	"main": "./dist/index.cjs",
-	"module": "./dist/index.js",
-	"exports": {
-		".": {
-			"types": "./dist/index.d.ts",
-			"require": "./dist/index.cjs",
-			"import": "./dist/index.js"
-		},
-		"./package.json": "./package.json"
-	},
-	"files": [
-		"./dist"
-	],
-	"types": "./dist/index.d.ts",
-	"engines": {
-		"node": ">=18"
-	},
-	"devDependencies": {
-		"@changesets/changelog-git": "0.1.14",
-		"@changesets/cli": "2.26.1",
-		"@commitlint/cli": "17.6.3",
-		"@commitlint/config-conventional": "17.6.3",
-		"@types/node": "18.16.8",
-		"@typescript-eslint/eslint-plugin": "5.59.5",
-		"@typescript-eslint/parser": "5.59.5",
-		"@vitest/coverage-c8": "0.31.0",
-		"eslint": "8.40.0",
-		"eslint-config-prettier": "8.8.0",
-		"eslint-import-resolver-typescript": "3.5.5",
-		"eslint-plugin-import": "2.27.5",
-		"eslint-plugin-prettier": "4.2.1",
-		"husky": "8.0.3",
-		"lint-staged": "13.2.2",
-		"prettier": "2.8.8",
-		"tsup": "6.7.0",
-		"typescript": "5.0.4",
-		"vitest": "0.31.0"
-	},
-	"keywords": [
-		"graceful",
-		"shutdown",
-		"cleanup",
-		"exit",
-		"signal",
-		"process",
-		"node",
-		"nodejs",
-		"close",
-		"terminate"
-	]
+    "name": "gracy",
+    "version": "1.0.2",
+    "description": "Execute custom cleanup function before Node.js exits",
+    "author": "Sami Al-Dury",
+    "license": "MIT",
+    "homepage": "https://github.com/samialdury/gracy#readme",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/samialdury/gracy.git"
+    },
+    "bugs": {
+        "url": "https://github.com/samialdury/gracy/issues"
+    },
+    "type": "module",
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.js",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "require": "./dist/index.cjs",
+            "import": "./dist/index.js"
+        },
+        "./package.json": "./package.json"
+    },
+    "types": "./dist/index.d.ts",
+    "files": [
+        "./dist"
+    ],
+    "scripts": {
+        "prepare": "husky install",
+        "typecheck": "tsc",
+        "build": "rm -rf ./dist && tsup",
+        "prettier": "prettier --cache --cache-location=./.cache/.prettiercache --write .",
+        "prettier:ci": "prettier --check .",
+        "eslint": "eslint --max-warnings 0 --cache --cache-location ./.cache/.eslintcache --fix .",
+        "eslint:ci": "eslint --max-warnings 0 .",
+        "lint": "pnpm prettier && pnpm eslint",
+        "lint:ci": "pnpm prettier:ci && pnpm eslint:ci",
+        "test": "vitest run",
+        "test:watch": "vitest watch",
+        "test:ci": "vitest run --coverage",
+        "version": "changeset add",
+        "release": "pnpm build && changeset publish"
+    },
+    "engines": {
+        "node": ">=18"
+    },
+    "devDependencies": {
+        "@changesets/changelog-git": "0.1.14",
+        "@changesets/cli": "2.26.1",
+        "@commitlint/cli": "17.6.3",
+        "@commitlint/config-conventional": "17.6.3",
+        "@samialdury/config": "0.0.1",
+        "@types/node": "18.16.8",
+        "@typescript-eslint/eslint-plugin": "5.59.5",
+        "@typescript-eslint/parser": "5.59.5",
+        "@vitest/coverage-c8": "0.31.0",
+        "eslint": "8.40.0",
+        "eslint-config-prettier": "8.8.0",
+        "eslint-import-resolver-typescript": "3.5.5",
+        "eslint-plugin-import": "2.27.5",
+        "eslint-plugin-prettier": "4.2.1",
+        "husky": "8.0.3",
+        "lint-staged": "13.2.2",
+        "prettier": "2.8.8",
+        "tsup": "6.7.0",
+        "typescript": "5.0.4",
+        "vitest": "0.31.0"
+    },
+    "keywords": [
+        "graceful",
+        "shutdown",
+        "cleanup",
+        "exit",
+        "signal",
+        "process",
+        "node",
+        "nodejs",
+        "close",
+        "terminate"
+    ]
 }
