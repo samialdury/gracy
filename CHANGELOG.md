@@ -1,5 +1,14 @@
 # gracy
 
+## 2.0.1
+
+### Patch Changes
+
+-   ee60448: Update dependency @samialdury/config to v1
+-   0929ffa: Update js test packages to v0.31.4
+-   f7b71a3: Update dependency @types/node to v18.16.16
+-   29265c9: Update linters
+
 ## 2.0.0
 
 ### Major Changes
