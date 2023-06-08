@@ -1,5 +1,0 @@
----
-"gracy": patch
----
-
-Update linters
