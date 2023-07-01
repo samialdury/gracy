@@ -1,5 +1,15 @@
 # gracy
 
+## 2.0.2
+
+### Patch Changes
+
+-   3a8e7f4: Update dependency tsup to v7
+-   8e25068: Update js test packages to v0.32.2
+-   4153480: Update dependency @types/node to v18.16.18
+-   4d5743c: Update linters
+-   32c9b0e: Update all non-major dependencies
+
 ## 2.0.1
 
 ### Patch Changes
