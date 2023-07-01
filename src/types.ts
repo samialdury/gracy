@@ -1,6 +1,6 @@
 interface LogFn {
-    (obj: unknown, msg?: string, ...args: unknown[]): void
-    (msg: string, ...args: unknown[]): void
+    (object: unknown, message?: string, ...args: unknown[]): void
+    (message: string, ...args: unknown[]): void
 }
 
 export interface Logger {

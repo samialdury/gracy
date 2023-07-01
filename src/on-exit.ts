@@ -8,6 +8,17 @@ const LOG_PREFIX = '[gracy]'
 const DEFAULT_EVENTS: string[] = ['uncaughtException', 'unhandledRejection']
 const DEFAULT_SIGNALS: NodeJS.Signals[] = ['SIGTERM', 'SIGINT']
 
+function loggerEnabled(
+    logger: Logger | Console | false
+): logger is Logger | Console {
+    return logger !== false
+}
+
+function useConsole(logger: Logger | Console): logger is Console {
+    // eslint-disable-next-line no-console
+    return logger instanceof console.Console
+}
+
 /**
  * Execute custom cleanup function before Node.js exits.
  *
@@ -21,51 +32,40 @@ export function onExit(options: OnExitOptions, fn: OnExitFn): void {
     const events = options.events ?? DEFAULT_EVENTS
     const signals = options.signals ?? DEFAULT_SIGNALS
 
-    function loggerEnabled(
-        logger: Logger | Console | false
-    ): logger is Logger | Console {
-        return logger !== false
-    }
-
-    function useConsole(logger: Logger | Console): logger is Console {
-        // eslint-disable-next-line no-console
-        return logger instanceof console.Console
-    }
-
-    function logFatal(err: unknown, msg: string): void {
+    function logFatal(err: unknown, message: string): void {
         if (!loggerEnabled(logger)) {
             return
         }
 
         if (useConsole(logger)) {
-            logger.error(`${LOG_PREFIX} ${msg}`, err)
+            logger.error(`${LOG_PREFIX} ${message}`, err)
             return
         }
 
-        logger.fatal(err, `${LOG_PREFIX} ${msg}`)
+        logger.fatal(err, `${LOG_PREFIX} ${message}`)
     }
 
-    function logDebug(object: unknown, msg?: string): void
-    function logDebug(msg: string): void
-    function logDebug(objectOrMsg: unknown, msg?: string): void {
+    function logDebug(object: unknown, message?: string): void
+    function logDebug(message: string): void
+    function logDebug(objectOrMessage: unknown, message?: string): void {
         if (!loggerEnabled(logger)) {
             return
         }
 
-        if (typeof msg === 'undefined') {
-            msg = objectOrMsg as string
-            logger.debug(`${LOG_PREFIX} ${msg}`)
+        if (message === undefined) {
+            message = objectOrMessage as string
+            logger.debug(`${LOG_PREFIX} ${message}`)
             return
         }
 
-        const object = objectOrMsg
+        const object = objectOrMessage
 
         if (useConsole(logger)) {
-            logger.debug(`${LOG_PREFIX} ${msg}`, object)
+            logger.debug(`${LOG_PREFIX} ${message}`, object)
             return
         }
 
-        logger.debug(object, `${LOG_PREFIX} ${msg}`)
+        logger.debug(object, `${LOG_PREFIX} ${message}`)
     }
 
     logDebug('Registering exit handlers')
