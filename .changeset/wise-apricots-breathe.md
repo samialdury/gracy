@@ -2,4 +2,4 @@
 "gracy": patch
 ---
 
-chore(deps): Update all non-major dependencies
+Update all non-major dependencies
