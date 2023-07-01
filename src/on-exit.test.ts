@@ -26,7 +26,7 @@ describe('onExit', () => {
     })
 
     it('should register function', () => {
-        const mockExitFn = vi.fn().mockResolvedValue(null)
+        const mockExitFn = vi.fn().mockResolvedValue({})
 
         const mockLogger = {
             debug: vi.fn(),
@@ -98,7 +98,7 @@ describe('onExit', () => {
     })
 
     it('should call registered function on beforeExit', () => {
-        const mockExitFn = vi.fn().mockResolvedValue(null)
+        const mockExitFn = vi.fn().mockResolvedValue({})
 
         const mockLogger = {
             debug: vi.fn(),
@@ -107,7 +107,7 @@ describe('onExit', () => {
 
         const mockProcessExit = vi
             .spyOn(process, 'exit')
-            .mockReturnValue(null as never)
+            .mockReturnValue({} as never)
 
         onExit(
             {
