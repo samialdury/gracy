@@ -11,7 +11,7 @@ describe('onExit', () => {
                 {
                     logger: false,
                 },
-                'not a function' as unknown as () => void
+                'not a function' as unknown as () => void,
             )
 
             expect.fail('Should throw error by now')
@@ -37,17 +37,17 @@ describe('onExit', () => {
             {
                 logger: mockLogger,
             },
-            mockExitFn
+            mockExitFn,
         )
 
         expect(mockExitFn).not.toHaveBeenCalled()
         expect(mockLogger.debug).toHaveBeenNthCalledWith(
             1,
-            '[gracy] Registering exit handlers'
+            '[gracy] Registering exit handlers',
         )
         expect(mockLogger.debug).toHaveBeenNthCalledWith(
             2,
-            '[gracy] Exit handlers registered'
+            '[gracy] Exit handlers registered',
         )
         expect(mockLogger.fatal).not.toHaveBeenCalled()
     })
@@ -113,17 +113,17 @@ describe('onExit', () => {
             {
                 logger: mockLogger,
             },
-            mockExitFn
+            mockExitFn,
         )
 
         expect(mockExitFn).not.toHaveBeenCalled()
         expect(mockLogger.debug).toHaveBeenNthCalledWith(
             1,
-            '[gracy] Registering exit handlers'
+            '[gracy] Registering exit handlers',
         )
         expect(mockLogger.debug).toHaveBeenNthCalledWith(
             2,
-            '[gracy] Exit handlers registered'
+            '[gracy] Exit handlers registered',
         )
         expect(mockLogger.fatal).not.toHaveBeenCalled()
 
@@ -133,12 +133,12 @@ describe('onExit', () => {
         expect(mockLogger.debug).toHaveBeenNthCalledWith(
             3,
             { code: 0 },
-            '[gracy] Received beforeExit hook'
+            '[gracy] Received beforeExit hook',
         )
         expect(mockLogger.debug).toHaveBeenNthCalledWith(
             4,
             { code: 0 },
-            '[gracy] beforeExit hook finished'
+            '[gracy] beforeExit hook finished',
         )
 
         expect(mockLogger.fatal).not.toHaveBeenCalled()

@@ -9,7 +9,7 @@ const DEFAULT_EVENTS: string[] = ['uncaughtException', 'unhandledRejection']
 const DEFAULT_SIGNALS: NodeJS.Signals[] = ['SIGTERM', 'SIGINT']
 
 function loggerEnabled(
-    logger: Logger | Console | false
+    logger: Logger | Console | false,
 ): logger is Logger | Console {
     return logger !== false
 }

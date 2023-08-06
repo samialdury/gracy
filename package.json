@@ -2,72 +2,6 @@
     "name": "gracy",
     "version": "2.0.2",
     "description": "Execute custom cleanup function before Node.js exits",
-    "author": "Sami Al-Dury",
-    "license": "MIT",
-    "homepage": "https://github.com/samialdury/gracy#readme",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/samialdury/gracy.git"
-    },
-    "bugs": {
-        "url": "https://github.com/samialdury/gracy/issues"
-    },
-    "type": "module",
-    "main": "./dist/index.cjs",
-    "module": "./dist/index.js",
-    "exports": {
-        ".": {
-            "types": "./dist/index.d.ts",
-            "require": "./dist/index.cjs",
-            "import": "./dist/index.js"
-        },
-        "./package.json": "./package.json"
-    },
-    "types": "./dist/index.d.ts",
-    "files": [
-        "./dist"
-    ],
-    "scripts": {
-        "prepare": "husky install",
-        "typecheck": "tsc",
-        "build": "rm -rf ./dist && tsup",
-        "prettier": "prettier --cache --cache-location=./.cache/.prettiercache --write .",
-        "prettier:ci": "prettier --check .",
-        "eslint": "eslint --max-warnings 0 --cache --cache-location ./.cache/.eslintcache --fix .",
-        "eslint:ci": "eslint --max-warnings 0 .",
-        "lint": "pnpm prettier && pnpm eslint",
-        "lint:ci": "pnpm prettier:ci && pnpm eslint:ci",
-        "test": "vitest run",
-        "test:watch": "vitest watch",
-        "test:ci": "vitest run --coverage",
-        "version": "changeset add",
-        "release": "pnpm build && changeset publish"
-    },
-    "engines": {
-        "node": ">=18"
-    },
-    "devDependencies": {
-        "@changesets/changelog-git": "0.1.14",
-        "@changesets/cli": "2.26.2",
-        "@commitlint/cli": "17.6.7",
-        "@commitlint/config-conventional": "17.6.7",
-        "@samialdury/config": "1.2.1",
-        "@types/node": "18.17.1",
-        "@typescript-eslint/eslint-plugin": "6.2.0",
-        "@typescript-eslint/parser": "6.2.0",
-        "@vitest/coverage-c8": "0.33.0",
-        "eslint": "8.46.0",
-        "eslint-config-prettier": "8.9.0",
-        "eslint-import-resolver-typescript": "3.5.5",
-        "eslint-plugin-import": "2.28.0",
-        "eslint-plugin-unicorn": "48.0.1",
-        "husky": "8.0.3",
-        "lint-staged": "13.2.3",
-        "prettier": "2.8.8",
-        "tsup": "7.1.0",
-        "typescript": "5.1.6",
-        "vitest": "0.33.0"
-    },
     "keywords": [
         "graceful",
         "shutdown",
@@ -79,5 +13,48 @@
         "nodejs",
         "close",
         "terminate"
-    ]
+    ],
+    "homepage": "https://github.com/samialdury/gracy#readme",
+    "bugs": {
+        "url": "https://github.com/samialdury/gracy/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/samialdury/gracy.git"
+    },
+    "license": "MIT",
+    "author": "Sami Al-Dury",
+    "type": "module",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "require": "./dist/index.cjs",
+            "import": "./dist/index.js"
+        },
+        "./package.json": "./package.json"
+    },
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "files": [
+        "./dist",
+        "./src"
+    ],
+    "devDependencies": {
+        "@commitlint/cli": "17.6.7",
+        "@samialdury/config": "5.6.0",
+        "@types/node": "20.4.8",
+        "@vitest/coverage-v8": "0.34.1",
+        "eslint": "8.46.0",
+        "husky": "8.0.3",
+        "lint-staged": "13.2.3",
+        "prettier": "3.0.1",
+        "semantic-release": "21.0.7",
+        "tsup": "7.2.0",
+        "typescript": "5.1.6",
+        "vitest": "0.34.1"
+    },
+    "engines": {
+        "node": ">=18"
+    }
 }
