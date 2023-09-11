@@ -1,6 +1,5 @@
 import process from 'node:process'
 import { types } from 'node:util'
-
 import type { Logger, OnExitFn, OnExitOptions } from './types.js'
 
 const LOG_PREFIX = '[gracy]'
@@ -9,12 +8,12 @@ const DEFAULT_EVENTS: string[] = ['uncaughtException', 'unhandledRejection']
 const DEFAULT_SIGNALS: NodeJS.Signals[] = ['SIGTERM', 'SIGINT']
 
 function loggerEnabled(
-    logger: Logger | Console | false,
-): logger is Logger | Console {
+    logger: Console | Logger | false,
+): logger is Console | Logger {
     return logger !== false
 }
 
-function useConsole(logger: Logger | Console): logger is Console {
+function useConsole(logger: Console | Logger): logger is Console {
     // eslint-disable-next-line no-console
     return logger instanceof console.Console
 }
