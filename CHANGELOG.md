@@ -1,3 +1,13 @@
+# [3.0.0](https://github.com/samialdury/gracy/compare/v2.1.1...v3.0.0) (2023-09-14)
+
+
+* feat!: upgrade to Node 20 ([1098a35](https://github.com/samialdury/gracy/commit/1098a35adb69ccf7d5e39d996a40339543df23f0))
+
+
+### BREAKING CHANGES
+
+* upgrade to Node 20
+
 ## [2.1.1](https://github.com/samialdury/gracy/compare/v2.1.0...v2.1.1) (2023-08-06)
 
 
