@@ -1,3 +1,10 @@
+## [3.0.1](https://github.com/samialdury/gracy/compare/v3.0.0...v3.0.1) (2023-10-17)
+
+
+### Bug Fixes
+
+* bundle configuration ([b0de84e](https://github.com/samialdury/gracy/commit/b0de84e8b4877232bdf72b8846e7562846ccc099))
+
 # [3.0.0](https://github.com/samialdury/gracy/compare/v2.1.1...v3.0.0) (2023-09-14)
 
 
