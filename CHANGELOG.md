@@ -1,3 +1,15 @@
+# [4.0.0](https://github.com/samialdury/gracy/compare/v3.0.1...v4.0.0) (2023-10-20)
+
+
+### Features
+
+* v4 ([f1e4af3](https://github.com/samialdury/gracy/commit/f1e4af306dabf305c826c0c80a348c9cc457d123))
+
+
+### BREAKING CHANGES
+
+* refactor the API + some new features (refer to README)
+
 ## [3.0.1](https://github.com/samialdury/gracy/compare/v3.0.0...v3.0.1) (2023-10-17)
 
 
