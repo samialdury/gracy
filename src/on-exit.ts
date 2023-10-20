@@ -1,73 +1,37 @@
 import process from 'node:process'
-import { types } from 'node:util'
-import type { Logger, OnExitFn, OnExitOptions } from './types.js'
+import type { OnExitFn, OnExitOptions } from './types.js'
+import { GracyLogger } from './logger.js'
 
-const LOG_PREFIX = '[gracy]'
-
-const DEFAULT_EVENTS: string[] = ['uncaughtException', 'unhandledRejection']
-const DEFAULT_SIGNALS: NodeJS.Signals[] = ['SIGTERM', 'SIGINT']
-
-function loggerEnabled(
-    logger: Console | Logger | false,
-): logger is Console | Logger {
-    return logger !== false
+export const defaultOptions: Required<OnExitOptions> = {
+    logger: console,
+    logLevel: 'info',
+    logPrefix: '[gracy] ',
+    timeout: 10_000,
+    events: ['uncaughtException', 'unhandledRejection'],
+    signals: ['SIGTERM', 'SIGINT'],
 }
 
-function useConsole(logger: Console | Logger): logger is Console {
-    // eslint-disable-next-line no-console
-    return logger instanceof console.Console
+async function sleep(ms: number): Promise<void> {
+    return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
 /**
  * Execute custom cleanup function before Node.js exits.
  *
- * `options` - See {@link OnExitOptions}.
- *
  * `fn` - Function to run before exiting the process.
  *        Could be synchronous or asynchronous.
+ *
+ * `options` - See {@link OnExitOptions}.
  */
-export function onExit(options: OnExitOptions, fn: OnExitFn): void {
-    const logger = options.logger
-    const events = options.events ?? DEFAULT_EVENTS
-    const signals = options.signals ?? DEFAULT_SIGNALS
+export function onExit(fn: OnExitFn, options?: OnExitOptions): void {
+    const { logger, logLevel, logPrefix, timeout, events, signals } = {
+        ...defaultOptions,
+        ...options,
+    } as typeof defaultOptions
 
-    function logFatal(err: unknown, message: string): void {
-        if (!loggerEnabled(logger)) {
-            return
-        }
+    const log = new GracyLogger(logger, logLevel, logPrefix)
 
-        if (useConsole(logger)) {
-            logger.error(`${LOG_PREFIX} ${message}`, err)
-            return
-        }
-
-        logger.fatal(err, `${LOG_PREFIX} ${message}`)
-    }
-
-    function logDebug(object: unknown, message?: string): void
-    function logDebug(message: string): void
-    function logDebug(objectOrMessage: unknown, message?: string): void {
-        if (!loggerEnabled(logger)) {
-            return
-        }
-
-        if (message === undefined) {
-            message = objectOrMessage as string
-            logger.debug(`${LOG_PREFIX} ${message}`)
-            return
-        }
-
-        const object = objectOrMessage
-
-        if (useConsole(logger)) {
-            logger.debug(`${LOG_PREFIX} ${message}`, object)
-            return
-        }
-
-        logger.debug(object, `${LOG_PREFIX} ${message}`)
-    }
-
-    logDebug('Registering exit handlers')
+    log.debug('Registering exit handlers')
 
     if (typeof fn !== 'function') {
         throw new TypeError(`Expected a function, got ${typeof fn}`)
@@ -76,36 +40,54 @@ export function onExit(options: OnExitOptions, fn: OnExitFn): void {
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     process.on('beforeExit', async (code) => {
         try {
-            logDebug({ code }, 'Received beforeExit hook')
+            log.info({ code }, 'Shutting down gracefully')
 
-            if (types.isAsyncFunction(fn)) {
-                await fn()
-            } else {
-                void fn()
-            }
+            await Promise.race([
+                sleep(timeout).then(() => {
+                    throw new Error(
+                        `Cleanup function did not finish in time (${timeout}ms)`,
+                    )
+                }),
+                fn(),
+            ])
 
-            logDebug({ code }, 'beforeExit hook finished')
+            log.info({ code }, 'Graceful shutdown complete')
         } catch (err) {
-            logFatal(err, 'Error during beforeExit hook')
+            log.error(err, 'Cleanup function failed')
             code = 1
         } finally {
+            log.info({ code }, 'Exiting process')
             process.exit(code)
         }
     })
 
     for (const event of events) {
-        process.on(event, (err) => {
-            logFatal(err, `Received ${event}`)
+        process.once(event, (err) => {
+            log.error(err, `Received ${event}`)
+
+            process.once(event, () => {
+                log.debug(`Received ${event} again`)
+                log.error({ code: 1 }, 'Forcing exit')
+                process.exit(1)
+            })
+
             process.emit('beforeExit', 1)
         })
     }
 
     for (const signal of signals) {
-        process.on(signal, () => {
-            logDebug(`Received ${signal}`)
+        process.once(signal, () => {
+            log.debug(`Received ${signal}`)
+
+            process.once(signal, () => {
+                log.debug(`Received ${signal} again`)
+                log.error({ code: 1 }, 'Forcing exit')
+                process.exit(1)
+            })
+
             process.emit('beforeExit', 0)
         })
     }
 
-    logDebug('Exit handlers registered')
+    log.debug('Exit handlers registered')
 }

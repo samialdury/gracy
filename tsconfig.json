@@ -32,9 +32,7 @@
         // Other
         "noErrorTruncation": true,
         "rootDir": "src",
-        "outDir": "dist",
-        // Extra types
-        "types": ["vitest/globals"]
+        "outDir": "dist"
     },
     "include": ["src", "test"]
 }

@@ -1,11 +1,13 @@
 COMMIT_SHA := $(shell git rev-parse --short HEAD)
-PROJECT_NAME := $(shell basename "$(PWD)")
+PROJECT_NAME := gracy
 
 BIN := node_modules/.bin
 
 SRC_DIR := src
 BUILD_DIR := dist
 CACHE_DIR := .cache
+
+TEST_GLOB := {src,test}/**/*.test.ts
 
 .PHONY: help
 ## Display this help
@@ -31,18 +33,13 @@ build: ## build the project
 	@$(BIN)/tsup
 
 ##@ Test
-
 .PHONY: test
 test: ## run tests
-	@$(BIN)/vitest run
+	@$(BIN)/glob -c "node --env-file .test.env --no-warnings --import tsx --test" "$(TEST_GLOB)"
 
 .PHONY: test-watch
 test-watch: ## run tests and watch for changes
-	@$(BIN)/vitest watch
-
-.PHONY: test-coverage
-test-coverage: ## run tests and generate coverage report
-	@$(BIN)/vitest run --coverage
+	@$(BIN)/glob -c "node --env-file .test.env --no-warnings --import tsx --watch --watch-preserve-output --test" "$(TEST_GLOB)"
 
 ##@ Code quality
 

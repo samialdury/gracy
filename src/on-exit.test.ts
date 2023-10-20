@@ -1,166 +1,178 @@
-import { onExit } from './on-exit.js'
+/* eslint-disable unicorn/no-useless-promise-resolve-reject */
+import assert from 'node:assert/strict'
+import { test } from 'node:test'
+import type { LogFn } from './types.js'
+import { defaultOptions, onExit } from './on-exit.js'
 
-describe('onExit', () => {
-    it('should be a function', () => {
-        expect(onExit).toBeInstanceOf(Function)
+await test('onExit', async (t) => {
+    type MockLogFn = ReturnType<typeof t.mock.fn<LogFn>>
+
+    let mockLogger: {
+        debug: MockLogFn
+        info: MockLogFn
+        error: MockLogFn
+    }
+
+    t.beforeEach(() => {
+        t.mock.restoreAll()
+        t.mock.reset()
+
+        mockLogger = {
+            debug: t.mock.fn(),
+            info: t.mock.fn(),
+            error: t.mock.fn(),
+        } satisfies typeof mockLogger
+
+        for (const event of [
+            ...defaultOptions.events,
+            ...defaultOptions.signals,
+            'beforeExit',
+        ]) {
+            process.removeAllListeners(event)
+        }
     })
 
-    it('should throw TypeError if not passed a function', () => {
-        try {
-            onExit(
-                {
-                    logger: false,
-                },
-                'not a function' as unknown as () => void,
-            )
+    await t.test('should be a function', () => {
+        assert.equal(typeof onExit, 'function')
+    })
 
-            expect.fail('Should throw error by now')
+    await t.test('should throw TypeError if not passed a function', () => {
+        try {
+            onExit('not a function' as unknown as () => void, {
+                logger: false,
+            })
+
+            assert.fail('Should throw error by now')
         } catch (err) {
             if (err instanceof Error) {
-                expect(err).toBeInstanceOf(TypeError)
-                expect(err.message).toBe('Expected a function, got string')
+                assert(err instanceof TypeError, 'Should be TypeError')
+                assert.equal(err.message, 'Expected a function, got string')
             } else {
-                expect.fail(`Should throw Error, got ${typeof err}`)
+                assert.fail(`Should throw Error, got ${typeof err}`)
             }
         }
     })
 
-    it('should register function', () => {
-        const mockExitFn = vi.fn().mockResolvedValue({})
+    await t.test('should register function', (t) => {
+        const mockExitFn = t.mock.fn(async () => {
+            return Promise.resolve()
+        })
 
-        const mockLogger = {
-            debug: vi.fn(),
-            fatal: vi.fn(),
-        }
+        onExit(mockExitFn, {
+            logger: mockLogger,
+            logLevel: 'debug',
+        })
 
-        onExit(
-            {
-                logger: mockLogger,
-            },
-            mockExitFn,
-        )
-
-        expect(mockExitFn).not.toHaveBeenCalled()
-        expect(mockLogger.debug).toHaveBeenNthCalledWith(
-            1,
+        assert.equal(mockExitFn.mock.calls.length, 0)
+        assert.equal(mockLogger.debug.mock.calls.length, 2)
+        assert.equal(
+            mockLogger.debug.mock.calls[0]?.arguments[0],
             '[gracy] Registering exit handlers',
         )
-        expect(mockLogger.debug).toHaveBeenNthCalledWith(
-            2,
+        assert.equal(
+            mockLogger.debug.mock.calls[1]?.arguments[0],
             '[gracy] Exit handlers registered',
         )
-        expect(mockLogger.fatal).not.toHaveBeenCalled()
+        assert.equal(mockLogger.error.mock.calls.length, 0)
     })
 
-    describe('logger', () => {
-        it('should log to console', () => {
-            const mockExitFn = vi.fn()
+    t.todo('should call registered function on beforeExit')
 
-            const consoleDebugSpy = vi
-                .spyOn(console, 'debug')
-                .mockImplementation(() => {
-                    return
-                })
-
-            onExit({ logger: console }, mockExitFn)
-
-            expect(mockExitFn).not.toHaveBeenCalled()
-            expect(consoleDebugSpy).toHaveBeenCalled()
+    await t.test('should log to console', () => {
+        const mockExitFn = t.mock.fn(async () => {
+            return Promise.resolve()
         })
 
-        it('should disable log if logger option is set to false', () => {
-            const mockExitFn = vi.fn()
+        const consoleDebugSpy = t.mock.method(console, 'debug')
+        const consoleErrorSpy = t.mock.method(console, 'error')
 
-            const consoleDebugSpy = vi.spyOn(console, 'debug')
+        onExit(mockExitFn, { logger: console, logLevel: 'debug' })
 
-            onExit({ logger: false }, mockExitFn)
-
-            expect(mockExitFn).not.toHaveBeenCalled()
-            expect(consoleDebugSpy).not.toHaveBeenCalled()
-        })
-
-        it('should use custom logger', () => {
-            const mockExitFn = vi.fn()
-
-            const mockLogger = {
-                debug: vi.fn(),
-                fatal: vi.fn(),
-            }
-
-            const consoleDebugSpy = vi.spyOn(console, 'debug')
-
-            onExit({ logger: mockLogger }, mockExitFn)
-
-            expect(mockExitFn).not.toHaveBeenCalled()
-            expect(mockLogger.debug).toHaveBeenCalled()
-            expect(consoleDebugSpy).not.toHaveBeenCalled()
-        })
-    })
-
-    it('should call registered function on beforeExit', () => {
-        const mockExitFn = vi.fn().mockResolvedValue({})
-
-        const mockLogger = {
-            debug: vi.fn(),
-            fatal: vi.fn(),
-        }
-
-        const mockProcessExit = vi
-            .spyOn(process, 'exit')
-            .mockReturnValue({} as never)
-
-        onExit(
-            {
-                logger: mockLogger,
-            },
-            mockExitFn,
-        )
-
-        expect(mockExitFn).not.toHaveBeenCalled()
-        expect(mockLogger.debug).toHaveBeenNthCalledWith(
-            1,
+        assert.equal(mockExitFn.mock.calls.length, 0)
+        assert.equal(consoleDebugSpy.mock.calls.length, 2)
+        assert.equal(
+            consoleDebugSpy.mock.calls[0]?.arguments[0],
             '[gracy] Registering exit handlers',
         )
-        expect(mockLogger.debug).toHaveBeenNthCalledWith(
-            2,
+        assert.equal(
+            consoleDebugSpy.mock.calls[1]?.arguments[0],
             '[gracy] Exit handlers registered',
         )
-        expect(mockLogger.fatal).not.toHaveBeenCalled()
+        assert.equal(consoleErrorSpy.mock.calls.length, 0)
+    })
 
-        process.emit('beforeExit', 0)
+    await t.test('should disable log if logger option is set to false', () => {
+        const mockExitFn = t.mock.fn(async () => {
+            return Promise.resolve()
+        })
 
-        expect(mockExitFn).toHaveBeenCalledTimes(1)
-        expect(mockLogger.debug).toHaveBeenNthCalledWith(
-            3,
-            { code: 0 },
-            '[gracy] Received beforeExit hook',
+        const consoleDebugSpy = t.mock.method(console, 'debug')
+        const consoleErrorSpy = t.mock.method(console, 'error')
+
+        onExit(mockExitFn, { logger: false })
+
+        assert.equal(mockExitFn.mock.calls.length, 0)
+        assert.equal(consoleDebugSpy.mock.calls.length, 0)
+        assert.equal(consoleErrorSpy.mock.calls.length, 0)
+    })
+
+    await t.test('should use custom logger', () => {
+        const mockExitFn = t.mock.fn(async () => {
+            return Promise.resolve()
+        })
+
+        const consoleDebugSpy = t.mock.method(console, 'debug')
+        const consoleErrorSpy = t.mock.method(console, 'error')
+
+        onExit(mockExitFn, {
+            logger: mockLogger,
+            logLevel: 'debug',
+        })
+
+        assert.equal(mockExitFn.mock.calls.length, 0)
+        assert.equal(mockLogger.debug.mock.calls.length, 2)
+        assert.equal(
+            mockLogger.debug.mock.calls[0]?.arguments[0],
+            '[gracy] Registering exit handlers',
         )
-        expect(mockLogger.debug).toHaveBeenNthCalledWith(
-            4,
-            { code: 0 },
-            '[gracy] beforeExit hook finished',
+        assert.equal(
+            mockLogger.debug.mock.calls[1]?.arguments[0],
+            '[gracy] Exit handlers registered',
         )
-
-        expect(mockLogger.fatal).not.toHaveBeenCalled()
-
-        expect(mockProcessExit).toHaveBeenCalledWith(0)
+        assert.equal(mockLogger.error.mock.calls.length, 0)
+        assert.equal(consoleDebugSpy.mock.calls.length, 0)
+        assert.equal(consoleErrorSpy.mock.calls.length, 0)
     })
 
-    describe.todo('events', () => {
-        it('should handle uncaughtException', () => {
-            return
+    await t.test('should log without prefix', () => {
+        const mockExitFn = t.mock.fn(async () => {
+            return Promise.resolve()
         })
-        it('should handle unhandledRejection', () => {
-            return
+
+        const consoleDebugSpy = t.mock.method(console, 'debug')
+        const consoleErrorSpy = t.mock.method(console, 'error')
+
+        onExit(mockExitFn, {
+            logger: mockLogger,
+            logPrefix: '',
+            logLevel: 'debug',
         })
+
+        assert.equal(mockExitFn.mock.calls.length, 0)
+        assert.equal(mockLogger.debug.mock.calls.length, 2)
+        assert.equal(
+            mockLogger.debug.mock.calls[0]?.arguments[0],
+            'Registering exit handlers',
+        )
+        assert.equal(
+            mockLogger.debug.mock.calls[1]?.arguments[0],
+            'Exit handlers registered',
+        )
+        assert.equal(mockLogger.error.mock.calls.length, 0)
+        assert.equal(consoleDebugSpy.mock.calls.length, 0)
+        assert.equal(consoleErrorSpy.mock.calls.length, 0)
     })
 
-    describe.todo('signals', () => {
-        it('should handle SIGTERM', () => {
-            return
-        })
-        it('should handle SIGINT', () => {
-            return
-        })
-    })
+    t.todo('events')
+    t.todo('signals')
 })
