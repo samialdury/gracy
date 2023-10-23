@@ -46,7 +46,7 @@
         "./src"
     ],
     "devDependencies": {
-        "@commitlint/cli": "17.7.2",
+        "@commitlint/cli": "17.8.0",
         "@samialdury/config": "6.1.1",
         "@types/node": "20.8.7",
         "eslint": "8.51.0",
