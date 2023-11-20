@@ -48,7 +48,7 @@
     "devDependencies": {
         "@commitlint/cli": "18.2.0",
         "@samialdury/config": "6.1.2",
-        "@types/node": "20.9.0",
+        "@types/node": "20.9.1",
         "eslint": "8.53.0",
         "glob": "10.3.10",
         "husky": "8.0.3",
