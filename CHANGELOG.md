@@ -1,3 +1,10 @@
+# [4.1.0](https://github.com/samialdury/gracy/compare/v4.0.0...v4.1.0) (2024-01-18)
+
+
+### Features
+
+* **ci:** add publint & attw ([207bdda](https://github.com/samialdury/gracy/commit/207bdda23b0175c9d4431a81e5325b354a37bb07))
+
 # [4.0.0](https://github.com/samialdury/gracy/compare/v3.0.1...v4.0.0) (2023-10-20)
 
 
