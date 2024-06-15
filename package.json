@@ -46,19 +46,19 @@
         "./src"
     ],
     "devDependencies": {
-        "@arethetypeswrong/cli": "0.13.5",
+        "@arethetypeswrong/cli": "0.13.10",
         "@commitlint/cli": "18.4.4",
         "@samialdury/config": "6.2.0",
         "@types/node": "20.11.5",
         "eslint": "8.56.0",
-        "glob": "10.3.10",
+        "glob": "10.3.16",
         "husky": "8.0.3",
-        "lint-staged": "15.2.0",
+        "lint-staged": "15.2.7",
         "prettier": "3.1.1",
-        "publint": "0.2.7",
+        "publint": "0.2.8",
         "semantic-release": "22.0.12",
-        "tsup": "8.0.1",
-        "tsx": "4.7.0",
+        "tsup": "8.0.2",
+        "tsx": "4.7.3",
         "typescript": "5.3.3"
     },
     "engines": {
