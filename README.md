@@ -1,5 +1,8 @@
 # `gracy`
 
+> [!WARNING]
+> This package and repository are deprecated and no longer maintained. For alternative, see [close-with-grace](https://github.com/mcollina/close-with-grace).
+
 [![CI status](https://github.com/samialdury/gracy/actions/workflows/ci.yml/badge.svg)](https://github.com/samialdury/gracy/actions/workflows/ci.yml)
 [![license](https://img.shields.io/github/license/samialdury/gracy)](LICENSE)
 [![npm version](https://img.shields.io/npm/v/gracy)](https://www.npmjs.com/package/gracy)
